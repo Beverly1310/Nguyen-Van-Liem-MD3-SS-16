@@ -24,7 +24,7 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "name")
-    @NotEmpty(message = "Employee id is empty")
+    @NotEmpty(message = "Employee name is empty")
     private String name;
     @Column(name = "address")
     @NotEmpty(message = "Employee address is empty")
