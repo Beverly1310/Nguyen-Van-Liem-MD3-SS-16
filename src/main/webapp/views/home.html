@@ -1,7 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Title</title>
     <!-- Required meta tags -->
@@ -14,7 +12,7 @@
 </head>
 <body>
 <div class="container">
-    <a href="/add">ADD NEW</a>
+    <a href="/add" class="btn btn-primary">ADD NEW</a>
     <table class="table">
         <thead>
         <tr>
@@ -27,17 +25,27 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${employeeList}" var="employee">
-            <tr>
-                <td>${employee.id}</td>
-                <td>${employee.name}</td>
-                <td>${employee.address}</td>
-                <td><fmt:formatDate value="${employee.dateOfBirth}" pattern="dd/MM/yyyy"></fmt:formatDate> </td>
-                <td>${employee.phone}</td>
-                <td><a href="/edit/${employee.id}">EDIT</a> </td>
-                <td><a href="/delete/${employee.id}" onclick="return confirm('Ban chac chua? 🤡')">DELETE</a> </td>
-            </tr>
-        </c:forEach>
+        <tr th:each="employee : ${employeeList}">
+            <td th:text="${employee.id}"></td>
+            <td th:text="${employee.name}"></td>
+            <td th:text="${employee.address}"></td>
+            <td th:text="${#dates.format(employee.dateOfBirth,'dd/MM/yyyy')}" ></td>
+            <td th:text="${employee.phone}"></td>
+            <td><a th:href="@{/edit/{id}(id=${employee.id})}" class="btn btn-info">EDIT</a></td>
+            <td><a th:href="@{/delete/{id}(id=${employee.id})}" onclick="return confirm('Ban chac chua? 🤡')" class="btn btn-danger" >DELETE</a></td>
+            <td></td>
+        </tr>
+<!--        <c:forEach items="${employeeList}" var="employee">-->
+<!--            <tr>-->
+<!--                <td>${employee.id}</td>-->
+<!--                <td>${employee.name}</td>-->
+<!--                <td>${employee.address}</td>-->
+<!--                <td><fmt:formatDate value="${employee.dateOfBirth}" pattern="dd/MM/yyyy"></fmt:formatDate> </td>-->
+<!--                <td>${employee.phone}</td>-->
+<!--                <td><a href="/edit/${employee.id}">EDIT</a> </td>-->
+<!--                <td><a href="/delete/${employee.id}" onclick="return confirm('Ban chac chua? 🤡')">DELETE</a> </td>-->
+<!--            </tr>-->
+<!--        </c:forEach>-->
         </tbody>
     </table>
 </div>

@@ -5,8 +5,10 @@ import com.ra.btss16.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 @Controller
 public class EmployeeController {
@@ -28,9 +30,15 @@ public class EmployeeController {
     }
 
     @PostMapping("/add")
-    public String add(@ModelAttribute("employee") Employee employee) {
-        iEmployee.save(employee);
-        return "redirect:/";
+    public String add(@Valid @ModelAttribute("employee") Employee employee, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("employee", employee);
+            return "add";
+        }else {
+            iEmployee.save(employee);
+            return "redirect:/";
+        }
+
     }
 
     @GetMapping("/edit/{id}")
@@ -41,9 +49,13 @@ public class EmployeeController {
     }
 
     @PostMapping("/edit")
-    public String edit(@ModelAttribute("employee") Employee employee) {
+    public String edit(@Valid@ModelAttribute("employee") Employee employee,BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("employee", employee);
+            return "edit";
+        }else {
         iEmployee.update(employee);
-        return "redirect:/";
+        return "redirect:/";}
     }
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Integer id) {
