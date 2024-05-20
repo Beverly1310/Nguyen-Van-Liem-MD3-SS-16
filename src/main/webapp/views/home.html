@@ -18,6 +18,7 @@
         <tr>
             <td>ID</td>
             <td>Name</td>
+            <td>Avatar</td>
             <td>Address</td>
             <td>Date of Birth</td>
             <td>Phone</td>
@@ -28,6 +29,7 @@
         <tr th:each="employee : ${employeeList}">
             <td th:text="${employee.id}"></td>
             <td th:text="${employee.name}"></td>
+            <td><img th:src="${employee.getImageURL()}" height="100" width="100"></td>
             <td th:text="${employee.address}"></td>
             <td th:text="${#dates.format(employee.dateOfBirth,'dd/MM/yyyy')}" ></td>
             <td th:text="${employee.phone}"></td>

@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="container">
-    <form th:action="@{/add}" th:object="${employee}" method="post">
+    <form th:action="@{/add}" th:object="${employee}" method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <LABEL class="form-label">Name:</LABEL>
             <input class="form-control" th:field="*{name}"><br>
@@ -30,6 +30,10 @@
             <LABEL class="form-label">Phone:</LABEL>
             <input class="form-control" th:field="*{phone}">
             <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" style="color: red"></p><br></div>
+        <div class="mb-3">
+            <LABEL class="form-label">Avatar:</LABEL>
+            <input type="file" class="form-control" th:field="*{imgFile}">
+            </div>
         <button type="submit" class="btn btn-primary">ADD</button>
     </form>
 </div>

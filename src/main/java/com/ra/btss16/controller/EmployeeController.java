@@ -1,6 +1,7 @@
 package com.ra.btss16.controller;
 
 import com.ra.btss16.dao.IEmployee;
+import com.ra.btss16.model.dto.EmployeeDTO;
 import com.ra.btss16.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,13 +25,13 @@ public class EmployeeController {
 
     @GetMapping("/add")
     public String handleAdd(Model model) {
-        Employee employee = new Employee();
+        EmployeeDTO employee = new EmployeeDTO();
         model.addAttribute("employee", employee);
         return "add";
     }
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute("employee") Employee employee, BindingResult bindingResult, Model model) {
+    public String add(@Valid @ModelAttribute("employee") EmployeeDTO employee, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("employee", employee);
             return "add";
@@ -45,11 +46,12 @@ public class EmployeeController {
     public String handEdit(@PathVariable("id") Integer id, Model model) {
         Employee employee = iEmployee.findById(id);
         model.addAttribute("employee", employee);
+        model.addAttribute("imgURL",employee.getImageURL());
         return "edit";
     }
 
     @PostMapping("/edit")
-    public String edit(@Valid@ModelAttribute("employee") Employee employee,BindingResult bindingResult, Model model) {
+    public String edit(@Valid@ModelAttribute("employee") EmployeeDTO employee, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("employee", employee);
             return "edit";
